@@ -1,6 +1,6 @@
 ## Jfokus x Cloudflare Meetup
 
-This is a simple Cloudflare Worker that generates a Valentine's Day message for the user using [Workers AI](https://developers.cloudflare.com/workers-ai/models/).
+This fork of the simple Cloudflare Worker that generates a Valentine's Day message for the user using [Workers AI](https://developers.cloudflare.com/workers-ai/models/) has text boxes for the user's name and favorite movie that is submitted via a form on the client side to the Workers AI model to generate a personal poem on the server-side.
 
 ### Prerequisites
 - Cloudflare account

@@ -72,55 +72,49 @@
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
-
-        .loading {
-            display: none;
-            margin: 1rem 0;
-        }
-
-        .loading::after {
-            content: "❤️";
-            animation: loading 1s infinite;
-        }
-
-        @keyframes loading {
-            0% { opacity: 0.2; }
-            50% { opacity: 1; }
-            100% { opacity: 0.2; }
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Valentine's Day Surprises</h1>
         <div class="heart">❤️</div>
-        <button id="fetchButton">Get Valentine's Message</button>
-        <div class="loading" id="loading"></div>
+        <form id="valentineForm">
+            <input type="text" id="name" name="name" placeholder="Their name" required>
+            <input type="text" id="fav-movie" name="fav-movie" placeholder="Their favorite movie" required>
+            <button type="submit" id="fetchButton">Get Valentine's Message</button>
+        </form>
         <div id="result"></div>
     </div>
 
     <script>
+        const form = document.getElementById('valentineForm');
         const button = document.getElementById('fetchButton');
         const result = document.getElementById('result');
-        const loading = document.getElementById('loading');
+        const nameInput = document.getElementById('name');
+        const favMovieInput = document.getElementById('fav-movie');
 
-        button.addEventListener('click', async () => {
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent form from navigating to /api
+
+            button.disabled = true;
+            result.textContent = "..."; // Show loading dots
+
+            const formData = new FormData();
+            formData.append('name', nameInput.value);
+            formData.append('fav-movie', favMovieInput.value);
+
             try {
-                button.disabled = true;
-                loading.style.display = 'block';
-                result.textContent = '';
-
-                // Replace this URL with your Cloudflare Worker endpoint
-                const response = await fetch('/api');
+                const response = await fetch('/api', {
+                    method: 'POST',
+                    body: formData,
+                });
                 const data = await response.json();
-
-                result.textContent = data;
+                result.textContent = data || "Unexpected response!";
             } catch (error) {
-                result.textContent = 'Oops! Something went wrong. Please try again!';
                 console.error('Error:', error);
+                result.textContent = "Something went wrong. Try again!";
             } finally {
                 button.disabled = false;
-                loading.style.display = 'none';
             }
         });
     </script>
