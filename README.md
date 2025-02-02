@@ -2,6 +2,8 @@
 
 This is a simple Cloudflare Worker that generates a Valentine's Day message for the user using [Workers AI](https://developers.cloudflare.com/workers-ai/models/).
 
+Checkout the [more-complex-version branch](https://github.com/elizabethsiegle/jfokusmeetup-vday-basic/tree/more-complex-version) for a more complexversion of the app that has text boxes submitted via a form on the client side to the Workers AI model to generate a personal poem on the server-side.
+
 ### Prerequisites
 - Cloudflare account
 - Node.js & Wrangler CLI installed (`npm install -g wrangler`).
